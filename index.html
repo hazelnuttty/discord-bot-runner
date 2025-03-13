@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot Runner</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #1e1e1e; color: white; padding: 20px; }
+        h2 { margin-bottom: 10px; }
+        input, button { padding: 10px; margin: 10px; border: none; border-radius: 5px; }
+        input { width: 250px; text-align: center; }
+        button { background-color: #007bff; color: white; font-weight: bold; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        #status { margin-top: 10px; font-size: 18px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>Bot Runner</h2>
+    <input type="text" id="tokenInput" placeholder="Masukkan Token">
+    <br>
+    <button onclick="runBot()">Jalankan Bot</button>
+    <p id="status">🚨 Waiting for request</p>
+
+    <script>
+        async function runBot() {
+            let token = document.getElementById("tokenInput").value.trim() || "ADMIN123";
+            let response = await fetch("/run-bot", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ token: token })
+            });
+
+            let result = await response.text();
+            document.getElementById("status").innerText = result;
+        }
+    </script>
+</body>
+</html>
